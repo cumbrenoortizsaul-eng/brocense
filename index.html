@@ -228,8 +228,8 @@ const RESPUESTAS = ["infinito","muchisimo","mucho","un monton","todo","hasta el 
 const PISTA = "Pista: más que a nada en el mundo 💕";
 
 /* ---- NUESTRA CANCIÓN ---- */
-// Pega aquí el enlace de vuestra canción (YouTube o Spotify) y el botón 🎵 la abrirá.
-const CANCION_URL = "";
+// ID del vídeo de YouTube de vuestra canción (lo que va después de youtu.be/ o watch?v=)
+const CANCION_ID = "zqm8hK1mvjc";
 
 // Frases bonitas: cambian solas cada día, en orden.
 const FRASES = [
@@ -374,10 +374,20 @@ tbtn.onclick=()=>{
   tbtn.textContent=dark?'🌙':'☀️';
 };
 
-/* ================= MÚSICA ================= */
-document.getElementById('music').onclick=function(){
-  if(!CANCION_URL){alert('💡 Para poner vuestra canción, edita la variable CANCION_URL en el código con el enlace de YouTube o Spotify.');return;}
-  window.open(CANCION_URL,'_blank');
+/* ================= MÚSICA (suena dentro de la web) ================= */
+const mbtn=document.getElementById('music'); let player=null;
+mbtn.onclick=function(){
+  if(!CANCION_ID){alert('💡 Añade el ID de YouTube en la variable CANCION_ID.');return;}
+  if(!player){
+    player=document.createElement('iframe');
+    player.allow="autoplay";
+    player.style.cssText="position:fixed;width:1px;height:1px;left:-9999px;border:0";
+    player.src=`https://www.youtube.com/embed/${CANCION_ID}?autoplay=1&loop=1&playlist=${CANCION_ID}`;
+    document.body.appendChild(player);
+    mbtn.textContent='⏸️';toast('Sonando nuestra canción 🎵');
+  }else{
+    player.remove();player=null;mbtn.textContent='🎵';
+  }
 };
 
 /* ================= REVEAL AL HACER SCROLL ================= */
