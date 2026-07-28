@@ -37,7 +37,14 @@
     90%{opacity:.7}
     100%{transform:translateY(-108vh) rotate(360deg);opacity:0}
   }
-  @media (prefers-reduced-motion: reduce){.fh{animation:none;display:none}}
+  .petal{position:absolute;top:-40px;pointer-events:none;animation:fall linear infinite;opacity:0}
+  @keyframes fall{
+    0%{transform:translateY(-40px) rotate(0);opacity:0}
+    10%{opacity:.8}
+    90%{opacity:.6}
+    100%{transform:translateY(112vh) rotate(340deg);opacity:0}
+  }
+  @media (prefers-reduced-motion: reduce){.fh,.petal{animation:none;display:none}}
 
   #toast{position:fixed;left:50%;top:22%;transform:translate(-50%,-10px);z-index:40;
     background:var(--card);color:var(--pink-deep);font-weight:700;padding:14px 22px;border-radius:40px;
@@ -100,6 +107,15 @@
   .letter-body.open{max-height:2000px}
   .letter-body p{margin:14px 0}
   .sig{font-family:'Dancing Script',cursive;font-size:1.8rem;color:var(--pink-deep);text-align:right}
+
+  /* Regalo sorpresa */
+  .giftbox{font-size:5.5rem;cursor:pointer;user-select:none;transition:transform .3s;display:inline-block}
+  .giftbox:hover{transform:scale(1.08) rotate(-4deg)}
+  .giftbox.opened{animation:pop .5s ease}
+  @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.35) rotate(8deg)}100%{transform:scale(1)}}
+  .gift-msg{max-height:0;overflow:hidden;transition:max-height .7s ease}
+  .gift-msg.open{max-height:400px}
+  .gift-msg p{font-size:clamp(1.2rem,4vw,1.6rem);font-family:'Dancing Script',cursive;font-weight:700;color:var(--pink-deep);margin-top:16px}
 
   footer{text-align:center;padding:50px 20px;color:var(--soft)}
   footer .big{font-family:'Dancing Script',cursive;font-size:2rem;color:var(--pink-deep)}
@@ -210,6 +226,18 @@
   </div>
 </section>
 
+<!-- ===== REGALO SORPRESA ===== -->
+<section id="gift">
+  <div class="wrap">
+    <h2>Un regalo para ti</h2>
+    <p class="lead">Toca el regalo para abrirlo 🎁</p>
+    <div class="card reveal" style="text-align:center;max-width:560px">
+      <div class="giftbox" id="giftBox">🎁</div>
+      <div class="gift-msg" id="giftMsg"><p id="giftText"></p></div>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="big">Te quiero 💕</div>
   <p>Hecho con mucho cariño para ti</p>
@@ -260,6 +288,9 @@ const MENSAJES = [
   "Mi persona favorita 💗","Contigo todo 🌟","Feliz cumple 🎂","Eres mi hogar 🏡❤️"
 ];
 
+// Mensaje que aparece al abrir el regalo sorpresa 🎁
+const REGALO_MENSAJE = "Ve al salón… ahí te espera tu sorpresa de verdad 🎁💕";
+
 // Fotos incrustadas dentro del propio archivo (funciona sin carpetas).
 // El primer valor es la imagen y el segundo su pie de foto.
 const FOTOS = [
@@ -302,6 +333,18 @@ gInput.addEventListener('keydown',e=>{if(e.key==='Enter')tryEnter();});
     h.addEventListener('click',showMsg);
     h.addEventListener('mouseenter',showMsg);
     c.appendChild(h);
+  }
+  // Lluvia de pétalos 🌸
+  const petalos=['🌸','🌷','💗','🩷','🌹'];
+  const np = window.innerWidth<600?12:20;
+  for(let i=0;i<np;i++){
+    const p=document.createElement('div');p.className='petal';
+    p.textContent=petalos[i%petalos.length];
+    p.style.left=Math.random()*100+'vw';
+    p.style.fontSize=(14+Math.random()*16)+'px';
+    p.style.animationDuration=(9+Math.random()*10)+'s';
+    p.style.animationDelay=(Math.random()*12)+'s';
+    c.appendChild(p);
   }
 })();
 const toastEl=document.getElementById('toast'); let toastT;
@@ -365,6 +408,15 @@ function confetti(){
   }
 }
 function welcome(){confetti();toast('¡Bienvenida, mi amor! 💕');}
+
+/* ================= REGALO SORPRESA ================= */
+const gBox=document.getElementById('giftBox'),gMsg=document.getElementById('giftMsg'),gText=document.getElementById('giftText');
+gBox.onclick=()=>{
+  if(gMsg.classList.contains('open'))return;
+  gBox.textContent='🎉';gBox.classList.add('opened');
+  gText.textContent=REGALO_MENSAJE;gMsg.classList.add('open');
+  confetti();
+};
 
 /* ================= LIGHTBOX ================= */
 const lb=document.getElementById('lb'),lbimg=lb.querySelector('img');
