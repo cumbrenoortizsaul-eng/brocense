@@ -14,7 +14,6 @@
   :root{
     --pink:#ff6b9d; --pink-deep:#ff4d79; --rose:#ffd1e0; --cream:#fff5f8;
     --ink:#5a2a3d; --soft:#8a5a6d; --card:#ffffff; --shadow:0 12px 40px rgba(255,77,121,.18);
-    --gold:#ffb84d;
   }
   html[data-theme="dark"]{
     --cream:#1a0f16; --card:#2a1721; --ink:#ffe3ee; --soft:#e6a9c0;
@@ -31,7 +30,7 @@
 
   /* ---------- Fondo de corazones ---------- */
   #hearts{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-  .fh{position:absolute;bottom:-40px;font-size:22px;opacity:0;animation:rise linear infinite}
+  .fh{position:absolute;bottom:-40px;font-size:22px;opacity:0;animation:rise linear infinite;pointer-events:auto;cursor:pointer}
   @keyframes rise{
     0%{transform:translateY(0) rotate(0);opacity:0}
     10%{opacity:.85}
@@ -39,6 +38,11 @@
     100%{transform:translateY(-108vh) rotate(360deg);opacity:0}
   }
   @media (prefers-reduced-motion: reduce){.fh{animation:none;display:none}}
+
+  #toast{position:fixed;left:50%;top:22%;transform:translate(-50%,-10px);z-index:40;
+    background:var(--card);color:var(--pink-deep);font-weight:700;padding:14px 22px;border-radius:40px;
+    box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;max-width:80vw;text-align:center}
+  #toast.show{opacity:1;transform:translate(-50%,0)}
 
   .wrap{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:0 20px}
 
@@ -82,30 +86,18 @@
   /* Galería */
   .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
   .photo{position:relative;aspect-ratio:1;border-radius:20px;overflow:hidden;box-shadow:var(--shadow);cursor:pointer;background:var(--rose)}
-  .photo img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+  .photo img{width:100%;height:100%;object-fit:cover;transition:transform .4s;display:block}
   .photo:hover img{transform:scale(1.08)}
   .photo .ph{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--soft);font-size:.85rem;padding:10px}
-  .photo .cap{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(0,0,0,.6));color:#fff;padding:16px 10px 8px;font-size:.85rem;opacity:0;transition:opacity .3s}
+  .photo .cap{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(0,0,0,.65));color:#fff;padding:18px 10px 8px;font-size:.85rem;opacity:0;transition:opacity .3s}
   .photo:hover .cap{opacity:1}
 
-  /* Razones */
-  .reasons{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-  .reason{background:var(--rose);border-radius:18px;padding:18px 20px;font-weight:500;display:flex;gap:10px;align-items:flex-start}
-  .reason .h{font-size:1.3rem;flex:none}
-
-  /* Timeline */
-  .timeline{position:relative;padding-left:28px}
-  .timeline::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:3px;background:var(--rose);border-radius:3px}
-  .tl-item{position:relative;padding:0 0 26px 6px}
-  .tl-item::before{content:"💗";position:absolute;left:-28px;top:-2px;font-size:1rem}
-  .tl-item .t{font-weight:700;color:var(--pink-deep)}
-
   /* Carta */
-  #letter .card{text-align:center;max-width:640px}
+  #letter .card{text-align:center;max-width:660px}
   .envelope{font-size:5rem;cursor:pointer;transition:transform .3s}
   .envelope:hover{transform:scale(1.08) translateY(-4px)}
-  .letter-body{max-height:0;overflow:hidden;transition:max-height .6s ease;text-align:left}
-  .letter-body.open{max-height:900px}
+  .letter-body{max-height:0;overflow:hidden;transition:max-height .8s ease;text-align:left}
+  .letter-body.open{max-height:2000px}
   .letter-body p{margin:14px 0}
   .sig{font-family:'Dancing Script',cursive;font-size:1.8rem;color:var(--pink-deep);text-align:right}
 
@@ -120,14 +112,36 @@
 
   .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
   .reveal.in{opacity:1;transform:none}
+
+  /* Portada con contraseña */
+  #gate{position:fixed;inset:0;z-index:100;background:linear-gradient(135deg,var(--pink),var(--pink-deep));
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;color:#fff;transition:opacity .6s}
+  #gate.hide{opacity:0;pointer-events:none}
+  #gate .lock{font-size:4rem;margin-bottom:10px}
+  #gate h3{font-family:'Dancing Script',cursive;font-size:clamp(2rem,7vw,3rem);margin-bottom:6px}
+  #gate .gq{max-width:26ch;margin-bottom:18px;font-weight:500}
+  #gate input{padding:14px 20px;border:none;border-radius:40px;font-size:1rem;font-family:'Quicksand';text-align:center;width:min(320px,80vw);outline:none}
+  #gate button{margin-top:14px;background:#fff;color:var(--pink-deep);border:none;padding:12px 30px;border-radius:40px;font-family:'Quicksand';font-weight:700;font-size:1rem;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.2)}
+  #gate .ghint{margin-top:16px;opacity:.85;font-size:.85rem;min-height:1.2em}
 </style>
 </head>
 <body>
 
+<!-- ===== PORTADA CON CONTRASEÑA ===== -->
+<div id="gate">
+  <div class="lock">🔒💕</div>
+  <h3>Solo para ti</h3>
+  <p class="gq" id="gateQ">…</p>
+  <input id="gateInput" placeholder="Escribe aquí…" autocomplete="off">
+  <button id="gateBtn">Entrar 💖</button>
+  <p class="ghint" id="gateHint"></p>
+</div>
+
 <div id="hearts"></div>
+<div id="toast"></div>
 
 <div class="top">
-  <button class="ibtn" id="music" title="Música">🎵</button>
+  <button class="ibtn" id="music" title="Nuestra canción">🎵</button>
   <button class="ibtn" id="theme" title="Modo claro/oscuro">🌙</button>
 </div>
 
@@ -161,9 +175,9 @@
     <h2>Nuestro tiempo</h2>
     <p class="lead">Cada segundo a tu lado cuenta</p>
     <div class="counters reveal">
-      <div class="counter"><div class="n" id="cDays">–</div><div class="l">días juntos 💞</div></div>
-      <div class="counter"><div class="n" id="cKiss">–</div><div class="l">besos (más o menos) 😘</div></div>
-      <div class="counter"><div class="n" id="cNext">–</div><div class="l">días para tu próximo cumple 🎈</div></div>
+      <div class="counter"><div class="n" id="cDays">–</div><div class="l">juntos 💞</div></div>
+      <div class="counter"><div class="n">∞</div><div class="l">veces que te quiero 😘</div></div>
+      <div class="counter"><div class="n" id="cNext">–</div><div class="l">para tu cumple 🎈</div></div>
     </div>
   </div>
 </section>
@@ -172,28 +186,8 @@
 <section id="photos">
   <div class="wrap">
     <h2>Nuestros momentos</h2>
-    <p class="lead">Sustituye estas fotos por las nuestras 🖼️</p>
+    <p class="lead">Los recuerdos que más me gustan 🖼️</p>
     <div class="gallery reveal" id="gallery"></div>
-  </div>
-</section>
-
-<!-- ===== RAZONES ===== -->
-<section id="reasons">
-  <div class="wrap">
-    <h2>Razones por las que te quiero</h2>
-    <p class="lead">Y me faltarían páginas…</p>
-    <div class="reasons reveal" id="reasons"></div>
-  </div>
-</section>
-
-<!-- ===== TIMELINE ===== -->
-<section id="story">
-  <div class="wrap">
-    <h2>Nuestra historia</h2>
-    <p class="lead">Los capítulos favoritos de mi vida</p>
-    <div class="card reveal">
-      <div class="timeline" id="timeline"></div>
-    </div>
   </div>
 </section>
 
@@ -205,10 +199,8 @@
       <div class="envelope" id="envelope">💌</div>
       <p class="hint" id="letterHint">Toca el sobre para abrir</p>
       <div class="letter-body" id="letterBody">
-        <p>Mi vida,</p>
-        <p>Feliz cumpleaños. No sé escribir bonito, pero sí sé que contigo todo es más fácil, más divertido y más nuestro. Gracias por tu paciencia, por tu risa, por cada abrazo y por elegirme cada día.</p>
-        <p>Hoy es tu día y quiero que sepas lo importante que eres para mí. Prometo seguir haciéndote reír, cuidarte y llenarte de planes y de amor.</p>
-        <p>Feliz cumpleaños, mi amor. Te quiero muchísimo.</p>
+        <p>Mi amor,</p>
+        <p>(Aquí va tu carta. Sustituye este texto por lo que quieras decirle: cómo os conocisteis, vuestros momentos y las razones por las que la quieres.)</p>
         <p class="sig">Con todo mi corazón ❤️</p>
       </div>
     </div>
@@ -217,19 +209,29 @@
 
 <footer>
   <div class="big">Te quiero 💕</div>
-  <p>Hecho con mucho cariño para ti · toca 🎵 para escuchar nuestra canción</p>
+  <p>Hecho con mucho cariño para ti</p>
 </footer>
 
 <div id="lb"><span class="x">×</span><img alt=""></div>
 
 <script>
 /* ================= DATOS EDITABLES ================= */
-// Fecha en la que empezasteis (año, mes 1-12, día)
-const INICIO = new Date(2022, 5, 15);
+// Fecha en la que empezáis (año, mes 1-12, día). El 30 que se lo pides 🥹
+const INICIO = new Date(2026, 6, 30);
 // Fecha del cumpleaños (mes 1-12, día)
-const CUMPLE = {mes:7, dia:28};
+const CUMPLE = {mes:7, dia:30};
 
-// Frases bonitas: cambia sola cada día, en orden. Añade las que quieras.
+/* ---- CONTRASEÑA (solo para ella) ---- */
+// La pregunta que verá y las respuestas válidas (en minúsculas, sin importar tildes)
+const PREGUNTA = "¿Cuánto te quiero? 🥰";
+const RESPUESTAS = ["infinito","muchisimo","mucho","un monton","todo","hasta el infinito"];
+const PISTA = "Pista: más que a nada en el mundo 💕";
+
+/* ---- NUESTRA CANCIÓN ---- */
+// Pega aquí el enlace de vuestra canción (YouTube o Spotify) y el botón 🎵 la abrirá.
+const CANCION_URL = "";
+
+// Frases bonitas: cambian solas cada día, en orden.
 const FRASES = [
   "Eres mi lugar favorito en todo el mundo.",
   "Contigo hasta los días normales son especiales.",
@@ -248,40 +250,43 @@ const FRASES = [
   "A tu lado el tiempo vuela y el corazón se queda."
 ];
 
-// Razones (emoji + texto)
-const RAZONES = [
-  ["😍","Por tu forma de mirarme"],
-  ["😂","Porque me haces reír como nadie"],
-  ["🤗","Por tus abrazos que lo curan todo"],
-  ["🍀","Por la suerte de haberte encontrado"],
-  ["💪","Por lo fuerte y valiente que eres"],
-  ["🌟","Por cómo iluminas cualquier sitio"],
-  ["🥰","Por lo bien que me cuidas"],
-  ["🎯","Porque contigo todo tiene sentido"]
+// Mensajitos que aparecen al tocar un corazón del fondo 💕
+const MENSAJES = [
+  "Te quiero 💕","Eres preciosa 😍","Mi vida 🥰","Para siempre 💞",
+  "Mi persona favorita 💗","Contigo todo 🌟","Feliz cumple 🎂","Eres mi hogar 🏡❤️"
 ];
 
-// Línea de tiempo (fecha/título + descripción)
-const HISTORIA = [
-  ["El día que nos conocimos","Todo empezó y sin saberlo, cambió mi vida."],
-  ["Nuestra primera cita","Los nervios, las risas y las ganas de repetir."],
-  ["Nuestro primer viaje","Descubriendo el mundo y a nosotros."],
-  ["Hoy","Y lo que nos queda por vivir juntos 💞"]
-];
-
-// Fotos: pon aquí las URLs o rutas de tus fotos. Deja "" para ver el marcador.
+// Fotos: sube tus fotos al repo como fotos/foto1.jpg ... foto5.jpg
+// (mismo nombre) y aparecerán solas aquí. El pie de foto es el texto.
 const FOTOS = [
-  ["","Nuestro primer viaje"],
-  ["","Ese día que reímos sin parar"],
-  ["","Tú, mi persona favorita"],
-  ["","Una tarde cualquiera contigo"],
-  ["","Nuestro rincón especial"],
-  ["","Y muchos momentos más…"]
+  ["fotos/foto1.jpg","Contigo hasta un beso robado es mágico 😘"],
+  ["fotos/foto2.jpg","Esa noche que no quería que acabara 🌙"],
+  ["fotos/foto3.jpg","Tú y yo, mi sitio favorito ❤️"],
+  ["fotos/foto4.jpg","Mis momentos favoritos son a tu lado 🥰"],
+  ["fotos/foto5.jpg","Y los que nos quedan por vivir 💞"]
 ];
 
-/* ================= CORAZONES ================= */
+/* ================= CONTRASEÑA ================= */
+const norm = s => s.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+const gate=document.getElementById('gate'),gInput=document.getElementById('gateInput'),gHint=document.getElementById('gateHint');
+document.getElementById('gateQ').textContent=PREGUNTA;
+let tries=0;
+function tryEnter(){
+  if(RESPUESTAS.map(norm).includes(norm(gInput.value))){
+    gate.classList.add('hide');setTimeout(()=>gate.style.display='none',600);
+    setTimeout(welcome,500);
+  }else{
+    tries++;gHint.textContent = tries>=2 ? PISTA : "Mmm… inténtalo otra vez 💗";
+    gInput.value="";gInput.focus();
+  }
+}
+document.getElementById('gateBtn').onclick=tryEnter;
+gInput.addEventListener('keydown',e=>{if(e.key==='Enter')tryEnter();});
+
+/* ================= CORAZONES + MENSAJES ================= */
 (function(){
   const c=document.getElementById('hearts'), emo=['❤️','💕','💗','💓','💖','🩷'];
-  const n = window.innerWidth<600?18:30;
+  const n = window.innerWidth<600?16:28;
   for(let i=0;i<n;i++){
     const h=document.createElement('div');h.className='fh';
     h.textContent=emo[i%emo.length];
@@ -289,9 +294,14 @@ const FOTOS = [
     h.style.fontSize=(14+Math.random()*22)+'px';
     h.style.animationDuration=(7+Math.random()*9)+'s';
     h.style.animationDelay=(Math.random()*10)+'s';
+    const showMsg=()=>toast(MENSAJES[Math.floor(Math.random()*MENSAJES.length)]);
+    h.addEventListener('click',showMsg);
+    h.addEventListener('mouseenter',showMsg);
     c.appendChild(h);
   }
 })();
+const toastEl=document.getElementById('toast'); let toastT;
+function toast(msg){toastEl.textContent=msg;toastEl.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>toastEl.classList.remove('show'),1600);}
 
 /* ================= FRASE DEL DÍA ================= */
 const dayOfYear = d => Math.floor((d-new Date(d.getFullYear(),0,0))/86400000);
@@ -307,41 +317,25 @@ document.getElementById('qbtn').onclick=()=>{qIdx=(qIdx+1)%FRASES.length;showQuo
 showQuote();
 
 /* ================= CONTADORES ================= */
-const days = Math.max(0,Math.floor((new Date()-INICIO)/86400000));
-document.getElementById('cDays').textContent = days.toLocaleString('es-ES');
-document.getElementById('cKiss').textContent = (days*3).toLocaleString('es-ES');
 (function(){
-  const now=new Date(); let next=new Date(now.getFullYear(),CUMPLE.mes-1,CUMPLE.dia);
-  if(next<new Date(now.getFullYear(),now.getMonth(),now.getDate())) next.setFullYear(now.getFullYear()+1);
-  const d=Math.round((next-new Date(now.getFullYear(),now.getMonth(),now.getDate()))/86400000);
-  document.getElementById('cNext').textContent = d===0?'¡HOY! 🎉':d;
+  const today=new Date(); const t0=new Date(today.getFullYear(),today.getMonth(),today.getDate());
+  const days = Math.floor((t0-new Date(INICIO.getFullYear(),INICIO.getMonth(),INICIO.getDate()))/86400000);
+  const el=document.getElementById('cDays');
+  el.textContent = days>0 ? days.toLocaleString('es-ES')+' días' : (days===0 ? '¡Día 1! 💞' : 'Muy pronto 💕');
+  let next=new Date(today.getFullYear(),CUMPLE.mes-1,CUMPLE.dia);
+  if(next<t0) next.setFullYear(today.getFullYear()+1);
+  const d=Math.round((next-t0)/86400000);
+  document.getElementById('cNext').textContent = d===0?'¡HOY! 🎉':d+(d===1?' día':' días');
 })();
 
 /* ================= GALERÍA ================= */
 const gal=document.getElementById('gallery');
 FOTOS.forEach(([src,cap])=>{
   const d=document.createElement('div');d.className='photo';
-  if(src){
-    d.innerHTML=`<img src="${src}" alt="${cap}" loading="lazy"><div class="cap">${cap}</div>`;
-    d.onclick=()=>openLb(src,cap);
-  }else{
-    d.innerHTML=`<div class="ph">📷<br>${cap}<br><small>(añade tu foto)</small></div>`;
-  }
+  const img=new Image();img.src=src;img.alt=cap;img.loading='lazy';
+  img.onload=()=>{d.innerHTML='';d.appendChild(img);const c=document.createElement('div');c.className='cap';c.textContent=cap;d.appendChild(c);d.onclick=()=>openLb(src,cap);};
+  img.onerror=()=>{d.innerHTML=`<div class="ph">📷<br>${cap}<br><small>(sube fotos/${src.split('/').pop()})</small></div>`;};
   gal.appendChild(d);
-});
-
-/* ================= RAZONES ================= */
-const rc=document.getElementById('reasons');
-RAZONES.forEach(([h,t])=>{
-  const d=document.createElement('div');d.className='reason';
-  d.innerHTML=`<span class="h">${h}</span><span>${t}</span>`;rc.appendChild(d);
-});
-
-/* ================= TIMELINE ================= */
-const tl=document.getElementById('timeline');
-HISTORIA.forEach(([t,desc])=>{
-  const d=document.createElement('div');d.className='tl-item';
-  d.innerHTML=`<div class="t">${t}</div><div>${desc}</div>`;tl.appendChild(d);
 });
 
 /* ================= CARTA ================= */
@@ -351,7 +345,7 @@ eb.onclick=()=>{const o=lb2.classList.toggle('open');eb.textContent=o?'💗':'�
 /* ================= TARTA + CONFETI ================= */
 const cake=document.getElementById('cake'),ch=document.getElementById('cakeHint');
 cake.onclick=()=>{
-  cake.classList.add('blown');cake.textContent='🎂';ch.textContent='¡Deseo pedido! 🌟 Feliz cumpleaños 💕';
+  cake.classList.add('blown');ch.textContent='¡Deseo pedido! 🌟 Feliz cumpleaños 💕';
   confetti();
 };
 function confetti(){
@@ -365,7 +359,7 @@ function confetti(){
     setTimeout(()=>p.remove(),3200);
   }
 }
-setTimeout(confetti,600); // confeti de bienvenida
+function welcome(){confetti();toast('¡Bienvenida, mi amor! 💕');}
 
 /* ================= LIGHTBOX ================= */
 const lb=document.getElementById('lb'),lbimg=lb.querySelector('img');
@@ -380,13 +374,10 @@ tbtn.onclick=()=>{
   tbtn.textContent=dark?'🌙':'☀️';
 };
 
-/* ================= MÚSICA (opcional) ================= */
-// Pon la URL de un mp3 vuestro en MUSICA para activar el botón 🎵
-const MUSICA=""; let audio=null;
+/* ================= MÚSICA ================= */
 document.getElementById('music').onclick=function(){
-  if(!MUSICA){alert('💡 Para poner vuestra canción, edita la variable MUSICA en el código con la URL de un mp3.');return;}
-  if(!audio){audio=new Audio(MUSICA);audio.loop=true;}
-  if(audio.paused){audio.play();this.textContent='⏸️';}else{audio.pause();this.textContent='🎵';}
+  if(!CANCION_URL){alert('💡 Para poner vuestra canción, edita la variable CANCION_URL en el código con el enlace de YouTube o Spotify.');return;}
+  window.open(CANCION_URL,'_blank');
 };
 
 /* ================= REVEAL AL HACER SCROLL ================= */
