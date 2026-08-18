@@ -664,7 +664,9 @@ var money = function(n){return "$"+n.toFixed(2)};
 // If a .webp photo is missing, try .jpg; if that's missing too, keep it hidden so the illustration shows.
 function imgFallback(img){
   img.style.opacity=0;
-  if(img.src.indexOf('.webp')>-1){ img.src=img.src.replace('.webp','.jpg'); }
+  var s=img.src;
+  if(s.indexOf('.webp')>-1){ img.src=s.replace('.webp','.jpg'); }
+  else if(s.indexOf('.jpg')>-1){ img.src=s.replace('.jpg','.png'); }
 }
 function setImg(i, btn){
   document.querySelectorAll('#thumbs button').forEach(function(b){b.setAttribute('aria-selected','false')});
