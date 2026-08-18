@@ -311,7 +311,7 @@ footer.site{background:var(--surface);border-top:1px solid var(--hairline);paddi
     <div class="main">
      <div class="ph ph-main">
       <!-- Real product photo loads here; if the file is missing, the illustration below shows automatically -->
-      <img id="mainPhoto" class="ph-photo" src="img/producto-1.jpg" alt="FurEase pet hair remover glove" onload="this.style.opacity=1" onerror="this.style.opacity=0">
+      <img id="mainPhoto" class="ph-photo" src="img/producto-1.webp" alt="FurEase pet hair remover glove" onload="this.style.opacity=1" onerror="imgFallback(this)">
       <svg class="ph-svg" viewBox="0 0 600 470" role="img" aria-label="Pet hair remover glove grooming a happy cat">
         <rect width="600" height="470" fill="var(--brand-soft)"/>
         <circle cx="300" cy="240" r="182" fill="color-mix(in srgb,var(--brand) 12%,transparent)"/>
@@ -356,16 +356,16 @@ footer.site{background:var(--surface);border-top:1px solid var(--hairline);paddi
     </div>
     <div class="thumbs" id="thumbs">
       <button aria-selected="true" onclick="setImg(0,this)" aria-label="Photo 1">
-        <span class="ph ph-thumb"><img class="ph-photo" src="img/producto-1.jpg" alt="" onload="this.style.opacity=1" onerror="this.style.opacity=0"><svg class="ph-svg" viewBox="0 0 120 96"><rect width="120" height="96" fill="var(--brand-soft)"/><g transform="translate(30 18)"><rect x="6" y="52" width="48" height="16" rx="6" fill="var(--brand-deep)"/><path d="M6 20c0-7 6-12 15-12h18c10 0 17 7 17 17v34H6z" fill="var(--brand)"/><g fill="#fff"><circle cx="16" cy="24" r="2.6"/><circle cx="30" cy="24" r="2.6"/><circle cx="44" cy="24" r="2.6"/><circle cx="16" cy="38" r="2.6"/><circle cx="30" cy="38" r="2.6"/><circle cx="44" cy="38" r="2.6"/></g></g></svg></span>
+        <span class="ph ph-thumb"><img class="ph-photo" src="img/producto-1.webp" alt="" onload="this.style.opacity=1" onerror="imgFallback(this)"><svg class="ph-svg" viewBox="0 0 120 96"><rect width="120" height="96" fill="var(--brand-soft)"/><g transform="translate(30 18)"><rect x="6" y="52" width="48" height="16" rx="6" fill="var(--brand-deep)"/><path d="M6 20c0-7 6-12 15-12h18c10 0 17 7 17 17v34H6z" fill="var(--brand)"/><g fill="#fff"><circle cx="16" cy="24" r="2.6"/><circle cx="30" cy="24" r="2.6"/><circle cx="44" cy="24" r="2.6"/><circle cx="16" cy="38" r="2.6"/><circle cx="30" cy="38" r="2.6"/><circle cx="44" cy="38" r="2.6"/></g></g></svg></span>
       </button>
       <button aria-selected="false" onclick="setImg(1,this)" aria-label="Photo 2">
-        <span class="ph ph-thumb"><img class="ph-photo" src="img/producto-2.jpg" alt="" onload="this.style.opacity=1" onerror="this.style.opacity=0"><svg class="ph-svg" viewBox="0 0 120 96"><rect width="120" height="96" fill="var(--brand-soft)"/><g transform="translate(34 26)"><path d="M12 20l8-16 9 12zM52 20l-8-16-9 12z" fill="var(--brand-deep)"/><circle cx="32" cy="30" r="24" fill="var(--brand-deep)"/><circle cx="24" cy="27" r="3.4" fill="#fff"/><circle cx="40" cy="27" r="3.4" fill="#fff"/><path d="M28 38h8l-4 5z" fill="var(--accent)"/></g></svg></span>
+        <span class="ph ph-thumb"><img class="ph-photo" src="img/producto-2.webp" alt="" onload="this.style.opacity=1" onerror="imgFallback(this)"><svg class="ph-svg" viewBox="0 0 120 96"><rect width="120" height="96" fill="var(--brand-soft)"/><g transform="translate(34 26)"><path d="M12 20l8-16 9 12zM52 20l-8-16-9 12z" fill="var(--brand-deep)"/><circle cx="32" cy="30" r="24" fill="var(--brand-deep)"/><circle cx="24" cy="27" r="3.4" fill="#fff"/><circle cx="40" cy="27" r="3.4" fill="#fff"/><path d="M28 38h8l-4 5z" fill="var(--accent)"/></g></svg></span>
       </button>
       <button aria-selected="false" onclick="setImg(2,this)" aria-label="Photo 3">
-        <span class="ph ph-thumb"><img class="ph-photo" src="img/producto-3.jpg" alt="" onload="this.style.opacity=1" onerror="this.style.opacity=0"><svg class="ph-svg" viewBox="0 0 120 96"><rect width="120" height="96" fill="var(--brand-soft)"/><g transform="translate(24 30)"><rect x="0" y="14" width="60" height="20" rx="8" fill="var(--brand)"/><path d="M60 24c14-4 24 2 22 6-2 5-16 6-24 3z" fill="color-mix(in srgb,var(--ink) 24%,transparent)"/><g fill="#fff"><circle cx="12" cy="24" r="2.6"/><circle cx="26" cy="24" r="2.6"/><circle cx="40" cy="24" r="2.6"/></g></g></svg></span>
+        <span class="ph ph-thumb"><img class="ph-photo" src="img/producto-3.webp" alt="" onload="this.style.opacity=1" onerror="imgFallback(this)"><svg class="ph-svg" viewBox="0 0 120 96"><rect width="120" height="96" fill="var(--brand-soft)"/><g transform="translate(24 30)"><rect x="0" y="14" width="60" height="20" rx="8" fill="var(--brand)"/><path d="M60 24c14-4 24 2 22 6-2 5-16 6-24 3z" fill="color-mix(in srgb,var(--ink) 24%,transparent)"/><g fill="#fff"><circle cx="12" cy="24" r="2.6"/><circle cx="26" cy="24" r="2.6"/><circle cx="40" cy="24" r="2.6"/></g></g></svg></span>
       </button>
       <button aria-selected="false" onclick="setImg(3,this)" aria-label="Photo 4">
-        <span class="ph ph-thumb"><img class="ph-photo" src="img/producto-4.jpg" alt="" onload="this.style.opacity=1" onerror="this.style.opacity=0"><svg class="ph-svg" viewBox="0 0 120 96"><rect width="120" height="96" fill="#DCE6EC"/><g transform="translate(30 24)"><rect x="4" y="10" width="52" height="36" rx="15" fill="#8AA7BC"/><g fill="#fff" opacity=".92"><circle cx="16" cy="23" r="2.6"/><circle cx="30" cy="23" r="2.6"/><circle cx="44" cy="23" r="2.6"/><circle cx="16" cy="34" r="2.6"/><circle cx="30" cy="34" r="2.6"/><circle cx="44" cy="34" r="2.6"/></g></g></svg></span>
+        <span class="ph ph-thumb"><img class="ph-photo" src="img/producto-4.webp" alt="" onload="this.style.opacity=1" onerror="imgFallback(this)"><svg class="ph-svg" viewBox="0 0 120 96"><rect width="120" height="96" fill="#DCE6EC"/><g transform="translate(30 24)"><rect x="4" y="10" width="52" height="36" rx="15" fill="#8AA7BC"/><g fill="#fff" opacity=".92"><circle cx="16" cy="23" r="2.6"/><circle cx="30" cy="23" r="2.6"/><circle cx="44" cy="23" r="2.6"/><circle cx="16" cy="34" r="2.6"/><circle cx="30" cy="34" r="2.6"/><circle cx="44" cy="34" r="2.6"/></g></g></svg></span>
       </button>
     </div>
   </div>
@@ -661,12 +661,16 @@ var selectedQty = 1;
 var money = function(n){return "$"+n.toFixed(2)};
 
 /* ----- gallery ----- */
-var IMAGES = document.querySelectorAll('#thumbs button').length;
+// If a .webp photo is missing, try .jpg; if that's missing too, keep it hidden so the illustration shows.
+function imgFallback(img){
+  img.style.opacity=0;
+  if(img.src.indexOf('.webp')>-1){ img.src=img.src.replace('.webp','.jpg'); }
+}
 function setImg(i, btn){
   document.querySelectorAll('#thumbs button').forEach(function(b){b.setAttribute('aria-selected','false')});
   btn.setAttribute('aria-selected','true');
   var m=document.getElementById('mainPhoto');
-  if(m){ m.style.opacity=0; m.src='img/producto-'+(i+1)+'.jpg'; }
+  if(m){ m.style.opacity=0; m.src='img/producto-'+(i+1)+'.webp'; }
 }
 
 /* ----- pack option select ----- */
