@@ -1,21 +1,35 @@
-# Clínica Dental Brocense — Web
+# Web de Cumpleaños 💕
 
-Página web de la **Clínica Dental Brocense** (Av. el Brocense, 1 · 10002 Cáceres · 927 70 97 39).
+Una web romántica de una sola página para felicitar un cumpleaños, con fotos, frases que cambian cada día y fondo animado de corazones.
 
-Es una web estática de un solo archivo: todo el HTML, CSS y JavaScript está en `index.html`, sin dependencias ni proceso de build.
+Todo está en un único archivo `index.html`, sin dependencias ni build.
 
-## Contenido
+## Qué incluye
 
-- **Inicio** con fondo animado de dientes flotantes y destellos.
-- **Tratamientos** típicos (limpieza, blanqueamiento, empastes, endodoncia, implantes, prótesis, ortodoncia y odontopediatría), cada uno con imagen; si una foto externa no carga, se muestra automáticamente una ilustración propia.
-- **Opiniones** reales de pacientes en Google.
-- **Horario** con indicador automático de «Abierto / Cerrado ahora» según la hora de Madrid y el día actual resaltado.
-- **Contacto** con mapa de Google, teléfono con enlace de llamada y botón «Cómo llegar».
+- 🎂 **Portada** con tarta que se "sopla" y confeti al entrar.
+- 💫 **Frase del día**: cambia sola cada día (y botón para ver otra).
+- 💞 **Contadores**: días juntos, besos aproximados y días para el próximo cumple.
+- 🖼️ **Galería** de fotos con pie de foto y lightbox al ampliar.
+- 💝 **Razones por las que te quiero** en tarjetas.
+- 📖 **Línea de tiempo** de vuestra historia.
+- 💌 **Carta** desplegable.
+- 🌙 **Modo claro/oscuro**, 🎵 botón de música y diseño 100% responsive.
 
-## Cómo verla
+## Cómo personalizarla
+
+Abre `index.html` y edita el bloque **DATOS EDITABLES** (arriba del `<script>`):
+
+- `INICIO` — la fecha en la que empezasteis.
+- `CUMPLE` — mes y día del cumpleaños.
+- `FRASES` — tus frases bonitas (cambian solas cada día).
+- `RAZONES`, `HISTORIA` — tus razones y vuestra historia.
+- `FOTOS` — las URLs o rutas de vuestras fotos + su pie de foto.
+- `MUSICA` — URL de un mp3 para vuestra canción (opcional).
+
+## Cómo verla / publicarla
 
 Abre `index.html` en cualquier navegador, o publícala gratis con GitHub Pages:
 
-1. En el repositorio: **Settings → Pages**.
+1. **Settings → Pages**.
 2. En *Source*, elige la rama y la carpeta raíz (`/`).
-3. Guarda: la web quedará disponible en la URL que indica GitHub.
+3. Guarda: quedará disponible en la URL que indica GitHub.
